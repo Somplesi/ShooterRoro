@@ -34,6 +34,7 @@ while running:
     # Mettre à jour l'écran
     pygame.display.flip()
 
+    # Jeu en cours
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
