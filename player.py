@@ -1,5 +1,6 @@
 import pygame
 from projectile import Projectile
+import random
 
 
 # Créer la Classe joueur
@@ -27,3 +28,14 @@ class Player(pygame.sprite.Sprite):
 
     def move_left(self):
         self.rect.x -= self.velocity
+
+    
+    def update_health_bar(self, surface):
+        # bar de vie du joueur
+        pygame.draw.rect(surface, (60,63,60), [self.rect.x + 50, self.rect.y + 20, self.max_health, 7])
+        pygame.draw.rect(surface, (111,210,46), [self.rect.x + 50, self.rect.y + 20, self.health, 7])
+
+    def damage(self, amount):
+        # Dégats subis du joueur
+        if self.health - amount > amount:
+            self.health -= amount # infliger dégats
