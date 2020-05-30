@@ -39,3 +39,5 @@ class Player(pygame.sprite.Sprite):
         # Dégats subis du joueur
         if self.health - amount > amount:
             self.health -= amount # infliger dégats
+        else:
+            self.game.game_over()
