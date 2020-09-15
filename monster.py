@@ -44,4 +44,4 @@ class Monster(pygame.sprite.Sprite):
         if self.game.comet_event.is_full_loaded():
             self.game.all_monsters.remove(self)
             # Appel pluie de comètes
-            self.attempt_fall()
+            self.game.comet_event.attempt_fall()
