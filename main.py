@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((1080, 720))
 
 # Charger l'arrière-plan
 background = pygame.image.load('assets/bg.jpg')
-
+ 
 # Charger Baniere
 banner = pygame.image.load('assets/banner.png')
 banner = pygame.transform.scale(banner, (500, 500))

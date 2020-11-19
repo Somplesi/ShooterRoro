@@ -1,20 +1,22 @@
 import pygame
 import random
+import animation
 
 # Créer Monstre
-class Monster(pygame.sprite.Sprite):
+class Monster(animation.AnimateSprite): #(pygame.sprite.Sprite):
 
     def __init__(self, game):
-        super().__init__()
+        super().__init__("mummy")
         self.game = game
         self.health = 100
         self.max_health = 100
         self.attack = 0.3
-        self.image = pygame.image.load('assets/mummy.png')
+        #self.image = pygame.image.load('assets/mummy.png')
         self.rect = self.image.get_rect()
         self.rect.x = 1000 + random.randint(0, 300)
         self.rect.y = 540
         self.velocity = random.randint(1, 3)
+        self.start_animation()
 
     def forward(self):
         # Deplacement si pas collision avec groupe de joueur
@@ -23,6 +25,9 @@ class Monster(pygame.sprite.Sprite):
         # Colision monstre avec joueur pour infliger dégats
         else:
             self.game.player.damage(self.attack)
+
+    def update_animation(self):
+        self.animate(loop=True)
 
     def update_health_bar(self, surface):
         # bar de vie du monstre
