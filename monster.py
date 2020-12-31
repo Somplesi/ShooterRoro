@@ -5,8 +5,8 @@ import animation
 # Créer Monstre
 class Monster(animation.AnimateSprite): #(pygame.sprite.Sprite):
 
-    def __init__(self, game):
-        super().__init__("mummy")
+    def __init__(self, game, name, size, offset=0):
+        super().__init__(name, size)
         self.game = game
         self.health = 100
         self.max_health = 100
@@ -14,8 +14,8 @@ class Monster(animation.AnimateSprite): #(pygame.sprite.Sprite):
         #self.image = pygame.image.load('assets/mummy.png')
         self.rect = self.image.get_rect()
         self.rect.x = 1000 + random.randint(0, 300)
-        self.rect.y = 540
-        self.velocity = random.randint(1, 3)
+        self.rect.y = 540 - offset
+        #self.velocity = random.randint(1, 3)
         self.start_animation()
 
     def forward(self):
@@ -44,9 +44,26 @@ class Monster(animation.AnimateSprite): #(pygame.sprite.Sprite):
         if self.health <= 0: # respawn
             self.health = self.max_health
             self.rect.x = 1000 + random.randint(0, 300)
-            self.velocity = random.randint(1, 3)
+            self.velocity = random.randint(1, self.default_speed)
         
         if self.game.comet_event.is_full_loaded():
             self.game.all_monsters.remove(self)
             # Appel pluie de comètes
             self.game.comet_event.attempt_fall()
+
+    def set_speed(self, speed):
+        self.default_speed = speed
+        self.velocity = random.randint(1, 3)
+
+class Mummy(Monster):
+    def __init__(self, game):
+        super().__init__(game, "mummy", (130, 130))
+        self.set_speed(3)
+
+class Alien(Monster):
+    def __init__(self, game):
+        super().__init__(game, "alien", (300, 300), 130)
+        self.health = 250
+        self.max_health = 250
+        self.set_speed(1)
+        self.attack = 0.8
