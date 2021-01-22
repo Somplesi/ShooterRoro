@@ -16,6 +16,7 @@ class Monster(animation.AnimateSprite): #(pygame.sprite.Sprite):
         self.rect.x = 1000 + random.randint(0, 300)
         self.rect.y = 540 - offset
         #self.velocity = random.randint(1, 3)
+        self.lootAmount = 10
         self.start_animation()
 
     def forward(self):
@@ -38,13 +39,21 @@ class Monster(animation.AnimateSprite): #(pygame.sprite.Sprite):
         pygame.draw.rect(surface, back_bar_color, back_bar_position)
         pygame.draw.rect(surface, bar_color, bar_position)
 
+    def addScore(self, points=1):
+        self.game.score += points
+
+    def setLootAmount(self, amount):
+        self.lootAmount = amount
+
     def damage(self, amount):
          # Dégats subis du monstre
         self.health -= amount # infliger dégats
         if self.health <= 0: # respawn
             self.health = self.max_health
+            # new monstre
             self.rect.x = 1000 + random.randint(0, 300)
             self.velocity = random.randint(1, self.default_speed)
+            self.addScore(self.lootAmount)
         
         if self.game.comet_event.is_full_loaded():
             self.game.all_monsters.remove(self)
@@ -59,6 +68,7 @@ class Mummy(Monster):
     def __init__(self, game):
         super().__init__(game, "mummy", (130, 130))
         self.set_speed(3)
+        self.setLootAmount(1)
 
 class Alien(Monster):
     def __init__(self, game):
@@ -67,3 +77,4 @@ class Alien(Monster):
         self.max_health = 250
         self.set_speed(1)
         self.attack = 0.8
+        self.setLootAmount(5)

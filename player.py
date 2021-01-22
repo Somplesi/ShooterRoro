@@ -1,6 +1,6 @@
 import pygame
 from projectile import Projectile
-import random
+#import random
 import animation
 
 
@@ -22,6 +22,7 @@ class Player(animation.AnimateSprite): #pygame.sprite.Sprite):
     def launch_projectile(self):
         self.all_projectiles.add(Projectile(self))
         self.start_animation()
+        self.game.soundManager.play('tir')
 
     def move_right(self):
         # Si le joueur n'est pas en collision
